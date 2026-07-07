@@ -1,0 +1,30 @@
+[
+  {
+    "title": "Explainer Video",
+    "category": "Explainer",
+    "ratio": "landscape",
+    "video": "assets/videos/explainer1.mp4",
+    "software": "Adobe After Effects"
+  },
+  {
+    "title": "SaaS Product Demo",
+    "category": "SaaS",
+    "ratio": "four-three",
+    "video": "assets/videos/explainer2.mp4",
+    "software": "Product Motion"
+  },
+  {
+    "title": "Social Reel",
+    "category": "Social",
+    "ratio": "portrait",
+    "video": "assets/videos/explainer3.mp4",
+    "software": "Vertical Animation"
+  },
+  {
+    "title": "E-learning Module",
+    "category": "E-learning",
+    "ratio": "landscape",
+    "video": "assets/videos/explainer2.mp4",
+    "software": "Learning Design"
+  }
+]
