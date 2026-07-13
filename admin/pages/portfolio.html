@@ -1,0 +1,78 @@
+<div class="card">
+
+<h2>Upload Portfolio Video</h2>
+
+<form id="portfolioForm">
+
+<label>Title</label>
+
+<input
+type="text"
+id="portfolioTitle">
+
+<label>Category</label>
+
+<select id="portfolioCategory">
+
+    <option value="Explainer">Explainer</option>
+
+    <option value="SaaS">SaaS</option>
+
+    <option value="Logo Animation">Logo Animation</option>
+
+    <option value="E-learning">E-learning</option>
+
+</select>
+
+<label>Description</label>
+
+<textarea
+rows="5"
+id="portfolioDescription"></textarea>
+
+<label>Thumbnail</label>
+
+<input
+type="file"
+id="portfolioThumbnail"
+accept="image/*">
+
+<label>Video</label>
+
+<input
+type="file"
+id="portfolioVideo"
+accept="video/*">
+
+<button type="submit" id="uploadButton">
+    Upload
+</button>
+<div id="uploadStatus" class="upload-status" style="display:none;">
+
+    <div class="upload-spinner"></div>
+
+    <p id="uploadText">Uploading video...</p>
+
+    <div class="progress-bar">
+        <div id="progressFill"></div>
+    </div>
+
+</div>
+
+</form>
+
+</div>
+
+<div class="card">
+
+<h2>
+
+Uploaded Videos
+
+</h2>
+
+<div id="uploadedVideos">
+    Loading...
+</div>
+
+</div>

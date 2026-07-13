@@ -1,0 +1,344 @@
+/* ===== Reset ===== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:Arial, Helvetica, sans-serif;
+    background:#0f172a;
+    color:#fff;
+
+}
+
+/* ===== Layout ===== */
+
+.dashboard{
+
+    display:flex;
+    min-height:100vh;
+
+}
+
+/* ===== Sidebar ===== */
+
+.sidebar{
+
+    width:260px;
+    background:#111827;
+    border-right:1px solid rgba(255,255,255,.05);
+
+}
+
+.logo{
+
+    padding:28px;
+    font-size:30px;
+    font-weight:bold;
+    color:#38bdf8;
+
+}
+
+.sidebar ul{
+
+    list-style:none;
+
+}
+
+.sidebar li{
+
+    padding:18px 28px;
+    cursor:pointer;
+    transition:.3s;
+
+}
+
+.sidebar li:hover{
+
+    background:#1f2937;
+
+}
+
+.sidebar li.active{
+
+    background:#2563eb;
+
+}
+
+/* ===== Main ===== */
+
+.main{
+
+    flex:1;
+    padding:40px;
+
+}
+
+header{
+
+    margin-bottom:30px;
+
+}
+
+header h1{
+
+    font-size:34px;
+    margin-bottom:8px;
+
+}
+
+header p{
+
+    color:#94a3b8;
+
+}
+
+/* ===== Page ===== */
+
+#pageContent{
+
+    display:flex;
+    flex-direction:column;
+    gap:25px;
+
+}
+
+/* ===== Card ===== */
+
+.card{
+
+    background:#1e293b;
+    border-radius:18px;
+    padding:30px;
+
+}
+
+/* ===== Form ===== */
+
+form{
+
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+
+}
+
+label{
+
+    font-weight:600;
+
+}
+
+input,
+textarea,
+select{
+
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    background:#334155;
+    color:white;
+    font-size:15px;
+
+}
+
+textarea{
+
+    resize:none;
+
+}
+
+input::placeholder,
+textarea::placeholder{
+
+    color:#cbd5e1;
+
+}
+
+button{
+
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    background:linear-gradient(90deg,#2563eb,#06b6d4);
+    color:white;
+    font-size:16px;
+    transition:.3s;
+
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+}
+
+/* ===== Responsive ===== */
+
+@media(max-width:900px){
+
+.dashboard{
+
+    flex-direction:column;
+
+}
+
+.sidebar{
+
+    width:100%;
+
+}
+
+.main{
+
+    padding:20px;
+
+}
+
+}
+.upload-status{
+    margin-top:20px;
+}
+
+.upload-spinner{
+    width:40px;
+    height:40px;
+    border:4px solid rgba(255,255,255,.15);
+    border-top:4px solid #3b82f6;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+    margin:auto;
+}
+
+@keyframes spin{
+
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+
+}
+
+.upload-status p{
+    text-align:center;
+    margin:15px 0;
+    color:#fff;
+}
+
+.progress-bar{
+
+    width:100%;
+    height:8px;
+
+    background:#2b3245;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+}
+
+#progressFill{
+
+    width:0%;
+
+    height:100%;
+
+    background:linear-gradient(90deg,#2563eb,#06b6d4);
+
+    transition:.25s;
+
+}
+/* ===========================
+   Portfolio Cards
+=========================== */
+
+#uploadedVideos{
+
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+    gap:20px;
+
+}
+
+.video-card{
+
+    background:#334155;
+    border-radius:14px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.08);
+
+}
+
+.video-card video{
+
+    width:100%;
+    height:200px;
+    object-fit:cover;
+    background:#000;
+
+}
+
+.video-info{
+
+    padding:16px;
+
+}
+
+.video-info h3{
+
+    font-size:18px;
+    margin-bottom:8px;
+
+}
+
+.video-info p{
+
+    color:#38bdf8;
+    margin-bottom:10px;
+
+}
+
+.video-info small{
+
+    display:block;
+    color:#cbd5e1;
+    line-height:1.6;
+
+}
+
+.video-actions{
+
+    display:flex;
+    gap:10px;
+    padding:16px;
+
+}
+
+.edit-btn{
+
+    flex:1;
+    background:#2563eb;
+
+}
+
+.delete-btn{
+
+    flex:1;
+    background:#dc2626;
+
+}
+
+.edit-btn:hover,
+.delete-btn:hover{
+
+    transform:translateY(-2px);
+
+}
