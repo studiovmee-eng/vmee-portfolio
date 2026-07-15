@@ -6,6 +6,9 @@ import {
   query,
   orderBy
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+emailjs.init({
+    publicKey: "aQp7Q7b85qnrj4ElX",
+});
 const menuButton = document.querySelector(".menu-toggle");
 const navbar = document.querySelector(".navbar");
 const header = document.querySelector(".header");
@@ -233,10 +236,34 @@ playControl?.addEventListener("click", () => {
   }
 });
 
-contactForm?.addEventListener("submit", (event) => {
-  event.preventDefault();
-  formNote.textContent = "Thanks. Your project details are ready to send to VMEE.";
-  contactForm.reset();
+contactForm?.addEventListener("submit", async (event) => {
+
+    event.preventDefault();
+
+    formNote.textContent = "Sending...";
+
+    try {
+
+        await emailjs.sendForm(
+            "service_bce789c",
+            "template_8hicuit",
+            contactForm
+        );
+
+        formNote.textContent =
+            "✅ Message sent successfully.";
+
+        contactForm.reset();
+
+    } catch (err) {
+
+        console.error(err);
+
+        formNote.textContent =
+            "❌ Failed to send message.";
+
+    }
+
 });
 
 window.addEventListener("scroll", () => {
