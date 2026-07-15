@@ -19,6 +19,14 @@ const featuredVideo = document.querySelector(".showcase-video video");
 const playControl = document.querySelector(".play-control");
 const videoModal = document.getElementById("videoModal");
 const modalVideo = document.getElementById("modalVideo");
+if (modalVideo) {
+    modalVideo.controlsList = "nodownload noplaybackrate noremoteplayback nofullscreen";
+    modalVideo.disablePictureInPicture = true;
+
+    modalVideo.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+    });
+}
 const closeVideo = document.getElementById("closeVideo");
 
 const fallbackProjects = [

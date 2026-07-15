@@ -45,13 +45,15 @@
           <div class="showcase-card">
             
             <div class="showcase-video">
-              <video
+<video
 id="heroVideoPlayer"
 autoplay
 muted
 loop
 playsinline
-preload="metadata">
+preload="metadata"
+controlsList="nodownload noplaybackrate noremoteplayback"
+disablePictureInPicture>
                 <source
 id="heroVideoSource"
 src="assets/videos/Demo 01.mp4"
@@ -76,7 +78,9 @@ id="aboutVideoPlayer"
 autoplay
 muted
 loop
-playsinline>
+playsinline
+controlsList="nodownload noplaybackrate noremoteplayback"
+disablePictureInPicture>
 
     <source
     id="aboutVideoSource"
@@ -229,11 +233,13 @@ playsinline>
             &times;
         </button>
 
-        <video
-            id="modalVideo"
-            controls
-            playsinline>
-        </video>
+       <video
+    id="modalVideo"
+    controls
+    controlsList="nodownload noplaybackrate noremoteplayback nofullscreen"
+    disablePictureInPicture
+    playsinline>
+</video>
 
     </div>
 
