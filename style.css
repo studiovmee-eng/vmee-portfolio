@@ -1073,3 +1073,16 @@ footer{
     }
 
 }
+.showcase-video,
+.about-media {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.showcase-video video,
+.about-media video {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}

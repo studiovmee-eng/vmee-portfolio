@@ -23,6 +23,12 @@ async function loadHero() {
         video.playsInline = true;
 
         video.play().catch(() => {});
+        video.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+});
+
+video.setAttribute("controlsList", "nodownload noplaybackrate noremoteplayback");
+video.disablePictureInPicture = true;
 
     } catch (err) {
 
