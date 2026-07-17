@@ -35,10 +35,16 @@ body{
 
 .logo{
 
-    padding:28px;
-    font-size:30px;
-    font-weight:bold;
-    color:#38bdf8;
+    padding:24px 28px;
+    display:flex;
+    align-items:center;
+
+}
+.dashboard-logo{
+
+    height:34px;
+    width:auto;
+    display:block;
 
 }
 
