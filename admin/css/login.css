@@ -67,8 +67,8 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    gap:12px;
-    margin-bottom:18px;
+    gap:10px;
+    margin-bottom:10px;
 }
 
 
@@ -117,14 +117,18 @@ body{
 }
 
 .admin-logo{
-    display:block;
-    height:42px;
+    height:32px;   /* আগে 42px ছিল */
     width:auto;
+    display:block;
 }
 
 .admin-text{
-    font-size:20px;
-    font-weight:700;
-    color:#fff;
-    letter-spacing:2px;
+    font-size:18px;
+    font-weight:400;      /* Regular */
+    text-transform:none;  /* ALL CAPS হবে না */
+    letter-spacing:0.5px;
+    color:#d9e2ec;
+
+    position:relative;
+    top:3px;              /* একটু নিচে নামাবে */
 }
