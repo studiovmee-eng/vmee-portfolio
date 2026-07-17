@@ -66,8 +66,8 @@ body{
 .admin-brand{
     display:flex;
     justify-content:center;
-    align-items:baseline;
-    gap:10px;
+    align-items:center;
+    gap:12px;
     margin-bottom:18px;
 }
 
@@ -91,10 +91,13 @@ body{
     content:"";
     width:7px;
     height:7px;
-    margin:10px 0 0 6px;
     border-radius:50%;
     background:#14f195;
     box-shadow:0 0 15px rgba(20,241,149,.8);
+
+    position:relative;
+    top:2px;
+    margin-left:6px;
 }
 
 .admin-text{
