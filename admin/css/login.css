@@ -48,7 +48,7 @@ body{
     color:#94a3b8;
 }
 
-.login-box button{
+.login-box button[type="submit"]{
     width:100%;
     padding:14px;
     border:none;
@@ -62,4 +62,74 @@ body{
 
 .login-box button:hover{
     opacity:.9;
+}
+.admin-brand{
+    display:flex;
+    justify-content:center;
+    align-items:baseline;
+    gap:10px;
+    margin-bottom:18px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    font-size:34px;
+    font-weight:800;
+    color:#fff;
+    line-height:1;
+}
+
+.logo-gradient{
+    background:linear-gradient(135deg,#2563eb,#14f195);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.logo::after{
+    content:"";
+    width:7px;
+    height:7px;
+    margin:12px 0 0 6px;
+    border-radius:50%;
+    background:#14f195;
+    box-shadow:0 0 15px rgba(20,241,149,.8);
+}
+
+.admin-text{
+    font-size:20px;
+    font-weight:700;
+    color:#fff;
+    letter-spacing:2px;
+}
+
+.password-box{
+    position:relative;
+    margin-bottom:16px;
+}
+
+.password-box input{
+    margin-bottom:0;
+    padding-right:55px;
+}
+
+.toggle-password{
+    position:absolute;
+    top:50%;
+    right:16px;
+    transform:translateY(-50%);
+    width:auto !important;
+    height:auto;
+    padding:0;
+    margin:0;
+    background:transparent !important;
+    border:none;
+    color:#94a3b8;
+    cursor:pointer;
+    font-size:18px;
+    line-height:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }

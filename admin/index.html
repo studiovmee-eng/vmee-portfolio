@@ -15,7 +15,20 @@
 
 <div class="login-box">
 
-<h1>VMEE Admin</h1>
+<div class="admin-brand">
+
+    <div class="logo">
+
+        <span>V</span>
+        <span class="logo-gradient">M</span>
+        <span>E</span>
+        <span>E</span>
+
+    </div>
+
+    <span class="admin-text">ADMIN</span>
+
+</div>
 
 <p>Sign in to manage your portfolio</p>
 
@@ -27,16 +40,27 @@ id="email"
 placeholder="Email"
 required>
 
+<div class="password-box">
+
 <input
 type="password"
 id="password"
 placeholder="Password"
 required>
 
-<button>
+<button
+type="button"
+id="togglePassword"
+class="toggle-password">
 
-Login
+👁
 
+</button>
+
+</div>
+
+<button type="submit">
+    Login
 </button>
 
 </form>
