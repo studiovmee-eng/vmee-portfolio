@@ -1,3 +1,10 @@
+const uploadStatus = document.getElementById("aboutUploadStatus");
+
+const uploadText = document.getElementById("aboutUploadText");
+
+const progressFill = document.getElementById("aboutProgressFill");
+
+const saveButton = document.getElementById("aboutSaveBtn");
 import { saveSection, getSection } from "../../firebase/firestore.js";
 
 const aboutForm = document.getElementById("aboutForm");
@@ -20,7 +27,7 @@ async function uploadFile(file) {
         throw new Error(result.message || "Upload Failed");
     }
 
-    return result.url;
+    return result;
 
 }
 
@@ -37,18 +44,57 @@ aboutForm.addEventListener("submit", async (e) => {
             return alert("Please select an About video.");
 
         }
+        uploadStatus.style.display = "block";
 
-        const videoUrl = await uploadFile(aboutVideo.files[0]);
+uploadText.textContent = "Uploading About Video...";
 
-        await saveSection("about", {
+progressFill.style.width = "20%";
 
-            videoUrl
+saveButton.disabled = true;
 
-        });
+saveButton.textContent = "Uploading...";
 
-        alert("About Video Updated Successfully");
+        const currentAbout = await getSection("about");
+
+const oldVideoUrl = currentAbout?.videoUrl || null;
+const oldFileName = currentAbout?.fileName || null;
+
+const result = await uploadFile(aboutVideo.files[0]);
+progressFill.style.width = "80%";
+
+uploadText.textContent = "Saving...";
+await saveSection("about", {
+    videoUrl: result.url,
+    fileName: result.fileName
+});
+
+if (oldVideoUrl) {
+
+    await fetch("http://127.0.0.1:3000/delete", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            fileName: oldFileName,
+            fileUrl: oldVideoUrl
+        })
+    });
+
+}
+progressFill.style.width = "100%";
+
+uploadText.textContent = "About Updated Successfully";
+       
 
         aboutForm.reset();
+        setTimeout(() => {
+
+    uploadStatus.style.display = "none";
+
+    progressFill.style.width = "0%";
+
+}, 1000);
 
     } catch (err) {
 
@@ -57,6 +103,13 @@ aboutForm.addEventListener("submit", async (e) => {
         alert(err.message || "Upload Failed");
 
     }
+    finally {
+
+    saveButton.disabled = false;
+
+    saveButton.textContent = "Save About";
+
+}
 
 });
 

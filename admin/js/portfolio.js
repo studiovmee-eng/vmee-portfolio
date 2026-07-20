@@ -3,6 +3,7 @@ import {
   collection,
   addDoc,
   getDocs,
+  getDoc,
   query,
   orderBy,
   serverTimestamp,
@@ -68,7 +69,7 @@ async function uploadFile(file){
 
     }
 
-    return result.url;
+   return result;
 
 }
 async function savePortfolio(data){
@@ -84,6 +85,8 @@ async function savePortfolio(data){
         videoUrl:data.videoUrl,
 
         thumbnailUrl:data.thumbnailUrl,
+        videoFileName: data.videoFileName,
+thumbnailFileName: data.thumbnailFileName,
 
         createdAt:serverTimestamp()
 
@@ -119,33 +122,39 @@ form.addEventListener("submit",async(e)=>{
 
         }
 
-        const videoUrl=await uploadFile(video);
+      const videoResult = await uploadFile(video);
 
-        let thumbnailUrl="";
+const videoUrl = videoResult.url;
+const videoFileName = videoResult.fileName;
+let thumbnailUrl = "";
+let thumbnailFileName = "";
 
-        if(thumbnail){
+if (thumbnail) {
 
-            uploadText.textContent="Uploading Thumbnail...";
+    uploadText.textContent = "Uploading Thumbnail...";
 
-            thumbnailUrl=await uploadFile(thumbnail);
+    const thumbnailResult = await uploadFile(thumbnail);
 
-        }
+    thumbnailUrl = thumbnailResult.url;
+    thumbnailFileName = thumbnailResult.fileName;
+
+}
 
         uploadText.textContent="Saving Portfolio...";
 
-        await savePortfolio({
+await savePortfolio({
 
-            title,
+    title,
+    description,
+    category,
 
-            description,
+    videoUrl,
+    videoFileName,
 
-            category,
+    thumbnailUrl,
+    thumbnailFileName
 
-            videoUrl,
-
-            thumbnailUrl
-
-        });
+});
 
         uploadText.textContent="✅ Upload Successful";
 
@@ -203,7 +212,10 @@ async function loadVideos() {
 
             uploadedVideos.innerHTML += `
 
-            <div class="video-card" data-id="${item.id}">
+           <div class="video-card"
+    data-id="${item.id}"
+    data-video="${data.videoFileName || ""}"
+    data-thumbnail="${data.thumbnailFileName || ""}">
 
                 <video
                     src="${data.videoUrl}"
@@ -255,6 +267,8 @@ async function loadVideos() {
 }
 
 loadVideos();
+
+
 // =============================
 // DELETE VIDEO
 // =============================
@@ -263,31 +277,97 @@ document.addEventListener("click", async (e) => {
 
     if (!e.target.classList.contains("delete-btn")) return;
 
-    const id = e.target.dataset.id;
+    const button = e.target;
 
-    const confirmDelete = confirm(
-        "Are you sure you want to delete this video?"
-    );
+    const id = button.dataset.id;
 
-    if (!confirmDelete) return;
+    if (!confirm("Are you sure you want to delete this video?")) return;
+
+    button.disabled = true;
+    button.textContent = "Deleting...";
 
     try {
 
-        await deleteDoc(doc(db, "portfolio", id));
+        const docRef = doc(db, "portfolio", id);
 
-        await loadVideos();
+        const snap = await getDoc(docRef);
 
-        alert("Video Deleted Successfully");
+        if (!snap.exists()) {
+            throw new Error("Portfolio not found");
+        }
 
-    } catch (err) {
+        const data = snap.data();
+
+        // Delete Video
+        if (data.videoFileName) {
+
+            const response = await fetch("http://127.0.0.1:3000/delete", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    fileName: data.videoFileName
+                })
+
+            });
+
+            if (!response.ok) {
+                throw new Error("Video delete failed");
+            }
+
+        }
+
+        // Delete Thumbnail
+        if (data.thumbnailFileName) {
+
+            const response = await fetch("http://127.0.0.1:3000/delete", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    fileName: data.thumbnailFileName
+                })
+
+            });
+
+            if (!response.ok) {
+                throw new Error("Thumbnail delete failed");
+            }
+
+        }
+
+        // Delete Firestore document
+        await deleteDoc(docRef);
+
+        // Remove card instantly
+        button.closest(".video-card")?.remove();
+
+        alert("Portfolio Deleted Successfully");
+
+    }
+
+    catch (err) {
 
         console.error(err);
 
-        alert("Delete Failed");
+        alert(err.message || "Delete Failed");
+
+        button.disabled = false;
+        button.textContent = "🗑 Delete";
 
     }
 
 });
+
+
 
 
 // =============================

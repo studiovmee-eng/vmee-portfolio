@@ -2,19 +2,35 @@
 
     <h2>About Section</h2>
 
-    <form id="aboutForm">
+<form id="aboutForm">
 
-        <label>About Video</label>
+    <label>About Video</label>
 
-        <input
-            type="file"
-            id="aboutVideo"
-            accept="video/*">
+    <input
+        type="file"
+        id="aboutVideo"
+        accept="video/*">
 
-        <button type="submit">
-            Save About
-        </button>
+    <div id="aboutUploadStatus" class="upload-status" style="display:none;">
 
-    </form>
+        <div class="upload-spinner"></div>
+
+        <p id="aboutUploadText">
+            Uploading...
+        </p>
+
+        <div class="progress-bar">
+            <div id="aboutProgressFill"></div>
+        </div>
+
+    </div>
+
+    <button
+        type="submit"
+        id="aboutSaveBtn">
+        Save About
+    </button>
+
+</form>
 
 </div>

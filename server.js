@@ -8,7 +8,8 @@ const multer = require("multer");
 
 const {
   S3Client,
-  PutObjectCommand
+  PutObjectCommand,
+  DeleteObjectCommand
 } = require("@aws-sdk/client-s3");
 
 const app = express();
@@ -56,15 +57,18 @@ app.post("/upload", upload.single("file"), async (req, res) => {
     console.log("Filename:", req.file.originalname);
 
     const fileName = `${Date.now()}-${req.file.originalname}`;
+const command = new PutObjectCommand({
+    Bucket: process.env.R2_BUCKET_NAME,
+    Key: fileName,
+    Body: req.file.buffer,
+    ContentType: req.file.mimetype,
+});
 
-    const command = new PutObjectCommand({
-      Bucket: process.env.R2_BUCKET_NAME,
-      Key: fileName,
-      Body: req.file.buffer,
-      ContentType: req.file.mimetype,
-    });
+console.log("Uploading to R2...");
 
 await r2.send(command);
+
+console.log("R2 Upload Complete");
 
 const fileUrl = `${process.env.R2_PUBLIC_URL}/${fileName}`;
 
@@ -73,6 +77,7 @@ console.log("Generated URL:", fileUrl);
 const response = {
   success: true,
   url: fileUrl,
+  fileName: fileName
 };
 
 console.log("Sending response:", response);
@@ -89,6 +94,51 @@ res.json(response);
   }
 });
 const PORT = process.env.PORT || 3000;
+app.post("/delete", async (req, res) => {
+  console.log("===== DELETE REQUEST =====");
+console.log(req.body);
+  try {
+
+    const { fileName, fileUrl } = req.body;
+
+    let key = fileName;
+
+    // Fallback for old data
+    if (!key && fileUrl) {
+      key = decodeURIComponent(fileUrl.split("/").pop());
+    }
+
+    if (!key) {
+      return res.status(400).json({
+        success: false,
+        message: "No filename provided"
+      });
+    }
+
+    const command = new DeleteObjectCommand({
+      Bucket: process.env.R2_BUCKET_NAME,
+      Key: key
+    });
+
+    await r2.send(command);
+    console.log("DELETE SUCCESS:", key);
+
+    res.json({
+      success: true,
+      message: "File deleted successfully"
+    });
+
+  } catch (err) {
+
+    console.error("DELETE ERROR:", err);
+
+    res.status(500).json({
+      success: false,
+      message: err.message
+    });
+
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

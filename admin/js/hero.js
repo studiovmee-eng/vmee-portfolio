@@ -19,6 +19,11 @@ heroForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     try {
+        const currentHero = await getSection("hero");
+       
+
+const oldVideoUrl = currentHero?.videoUrl || null;
+const oldFileName = currentHero?.fileName || null;
 
         if (!heroVideo.files.length) {
 
@@ -59,12 +64,25 @@ heroForm.addEventListener("submit", async (e) => {
         progressFill.style.width = "80%";
 
         uploadText.textContent = "Saving...";
+await saveSection("hero", {
+    videoUrl: result.url,
+    fileName: result.fileName
+});
+if (oldVideoUrl) {
+    
 
-        await saveSection("hero", {
+    await fetch("http://localhost:3000/delete", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            fileName: oldFileName,
+            fileUrl: oldVideoUrl
+        })
+    });
 
-            videoUrl: result.url
-
-        });
+}
 
         progressFill.style.width = "100%";
 
@@ -102,6 +120,5 @@ async function loadHero() {
 
     if (!hero) return;
 
-    console.log("Current Hero Video:", hero.videoUrl);
 
 }
